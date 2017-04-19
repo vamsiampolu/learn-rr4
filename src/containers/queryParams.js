@@ -1,4 +1,3 @@
-import createHistory from 'history/createBrowserHistory';
 import qs from 'qs';
 import { compose, lifecycle, withState } from 'recompose';
 

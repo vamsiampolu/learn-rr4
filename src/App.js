@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
 import Topics from './components/Topics';
+import NotFound from './components/NotFound';
+
 
 class App extends Component {
   render() {
@@ -26,10 +28,12 @@ class App extends Component {
           </ul>
           <hr />
 
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/topics" component={Topics} />
-
+          <Switch>
+            <Route path="/about" component={About} />
+            <Route path="/topics" component={Topics} />
+            <Route exact path="/" component={Home} />
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </div>
     );
