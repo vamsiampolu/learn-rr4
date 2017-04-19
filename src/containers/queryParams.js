@@ -43,6 +43,7 @@ const withQs = compose(
         if (queryParamsStr != null) {
           let queryParams = qs.parse(queryParamsStr);
           // only retrieve accepted query keys from the query
+          console.log(queryKeys);
           if(Array.isArray(queryKeys) && queryKeys.length) {
             queryParams = pick(queryParams, queryKeys);
           }

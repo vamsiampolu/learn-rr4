@@ -29,7 +29,12 @@ class App extends Component {
           <hr />
 
           <Switch>
-            <Route path="/about" component={About} />
+            <Route path="/about" render={(props) => {
+                const { match } = props;
+                const queryKeys = ['some', 'many', 'any', 'few' ,'little' ];
+                return (<About match={match} queryKeys={queryKeys} />);
+              }}
+            />
             <Route path="/topics" component={Topics} />
             <Route exact path="/" component={Home} />
             <Route component={NotFound} />
