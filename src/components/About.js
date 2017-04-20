@@ -5,9 +5,13 @@ import withQs from '../containers/queryParams'
 const { string, arrayOf, object } = PropTypes;
 
 function About (props) {
-  const { match } = props;
+  const { match, search } = props;
   console.log(match);
-  return (<div><h2>About</h2></div>);
+  return (<div>
+    <h2>About</h2>
+    <pre>{`${JSON.stringify(search).trim()}`}
+    </pre>
+  </div>);
 }
 
 About.propTypes = {
@@ -15,5 +19,6 @@ About.propTypes = {
   queryKeys: arrayOf(string)
 };
 
-const AboutContainer = withQs(About);
+const queryKeys = ['some', 'many', 'any', 'few' ,'little' ];
+const AboutContainer = withQs(queryKeys)(About);
 export default AboutContainer;

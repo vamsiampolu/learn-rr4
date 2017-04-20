@@ -31,8 +31,7 @@ class App extends Component {
           <Switch>
             <Route path="/about" render={(props) => {
                 const { match } = props;
-                const queryKeys = ['some', 'many', 'any', 'few' ,'little' ];
-                return (<About match={match} queryKeys={queryKeys} />);
+                return (<About match={match} />);
               }}
             />
             <Route path="/topics" component={Topics} />

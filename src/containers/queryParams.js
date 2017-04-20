@@ -1,4 +1,5 @@
 import qs from 'qs';
+import React, { Component, PropTypes } from 'react';
 import { compose, lifecycle, withState } from 'recompose';
 
 // object.pick (the implementation is borrowed from jonschlinkert/object.pick )
@@ -32,34 +33,46 @@ function pick(obj, keys) {
   return res;
 };
 
-const withQs = compose(
-  withState('search', 'setSearch', {}),
-  lifecycle({
-    componentDidMount: function () {
-      // works on the client side; server side implementation is specific to server
-      const { setSearch, queryKeys } = this.props;
+const withQs = (queryKeys) => (BaseComponent) => {
+  return class WithQs extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        search: {}
+      };
+    }
+
+    componentDidMount () {
+      const { setSearch } = this.props;
       if(global != null && global.location != null && global.location.search != null) {
         const queryParamsStr = global.location.search.slice(1);
         if (queryParamsStr != null) {
           let queryParams = qs.parse(queryParamsStr);
           // only retrieve accepted query keys from the query
-          console.log(queryKeys);
           if(Array.isArray(queryKeys) && queryKeys.length) {
             queryParams = pick(queryParams, queryKeys);
           }
-          // dispatch to redux instead of using setState here
-          setSearch(prev => {
+          // functional setState
+          this.setState((state) => {
+            const { search: prev } = state;
             const prevStr = qs.stringify(prev);
             if(queryParamsStr !== prevStr) {
-              return queryParams;
+              return { search: queryParams };
             }
-            return prev;
+            return state;
           });
         }
       }
     }
-  }),
-);
+
+    render () {
+      return (<BaseComponent
+          {...this.state}
+          {...this.props}
+      />);
+    }
+  }
+}
 
 export default withQs
 
