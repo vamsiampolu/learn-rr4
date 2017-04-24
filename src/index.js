@@ -1,9 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import './index.css'
+import createBrowserHistory from 'history/createBrowserHistory'
+import {Router} from 'react-router'
 
-ReactDOM.render(<Router><App /></Router>,
+export const history = createBrowserHistory()
+
+ReactDOM.render(
+  <Router history={history}><App /></Router>,
   document.getElementById('root')
-);
+)
